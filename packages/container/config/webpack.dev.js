@@ -1,11 +1,13 @@
 const { merge } = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const commonConfig = require('./webpack.common');
 const dependencies = require('./sharedDependencies').dependencies;
 
 const devConfig = {
   mode: 'development',
+  output: {
+    clean: true,
+  },
   devtool: 'eval-source-map',
   devServer: {
     port: 8080,
@@ -25,9 +27,6 @@ const devConfig = {
           requiredVersion: dependencies.react,
         }
       },
-    }),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
     }),
   ],
 };
