@@ -11,7 +11,7 @@
     ],
     "overrides": [
     ],
-    "ignorePatterns": ["/dist", "webpack.*.js"],
+    "ignorePatterns": ["/dist", "config/"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",

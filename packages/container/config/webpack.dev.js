@@ -2,18 +2,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const commonConfig = require('./webpack.common');
-
-const skipDeps = ['@mui/icons-material', '@mui/material'];
-const allDeps = require('../package.json').dependencies;
-const dependencies = Object.keys(allDeps).reduce(
-  (res, key) => {
-    if (!skipDeps.includes(key)) {
-      return {...res, key: allDeps[key]};
-    }
-    return res;
-  },
-  {}
-);
+const dependencies = require('./sharedDependencies').dependencies;
 
 const devConfig = {
   mode: 'development',
@@ -33,7 +22,7 @@ const devConfig = {
         ...dependencies,
         react: {
           singleton: true,
-          requiredVersion: allDeps.react,
+          requiredVersion: dependencies.react,
         }
       },
     }),
