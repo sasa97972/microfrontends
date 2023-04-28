@@ -4,7 +4,7 @@ import React, { useEffect, useRef, memo } from 'react';
 // Modules Federation
 import { mount } from 'marketing/MarketingApp';
 
-function Marketing() {
+function MarketingApp() {
 	const marketingRoot = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -14,6 +14,6 @@ function Marketing() {
 	return <div ref={marketingRoot} />;
 }
 
-const MarketingMemoized = memo(Marketing);
+const MarketingMemoized = memo(MarketingApp);
 
 export default MarketingMemoized;
