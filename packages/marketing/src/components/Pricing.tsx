@@ -1,5 +1,5 @@
 // Utils
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 // Components
@@ -13,7 +13,7 @@ import {
   Typography,
   Link,
   Container,
-  Box,
+  Box, GlobalStyles,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -21,13 +21,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Star as StarIcon } from '@mui/icons-material';
 
 const useStyles = makeStyles()((theme) => ({
-  '@global': {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-  },
   toolbar: {
     flexWrap: 'wrap',
   },
@@ -64,10 +57,6 @@ const useStyles = makeStyles()((theme) => ({
   },
   footerLink: {
     textDecoration: 'none',
-  },
-  resetList: {
-    listStyle: 'none',
-    padding: 0,
   },
   pricingFeaturesList: {
     textAlign: 'center',
@@ -160,21 +149,15 @@ function Copyright() {
 export default function Pricing() {
   const { classes } = useStyles();
 
-  const test = async () => {
-    return new Promise(res => setTimeout(() => res(123), 500));
-  };
-
-  const anotherTest = async () => {
-    const result = await test();
-    console.log(result);
-  };
-
-  useEffect(() => {
-    anotherTest();
-  }, []);
-
   return (
     <React.Fragment>
+      <GlobalStyles styles={{
+        ul: {
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+        },
+      }} />
       {/* Hero unit */}
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography
@@ -227,7 +210,7 @@ export default function Pricing() {
                       /mo
                     </Typography>
                   </div>
-                  <ul className={[classes.pricingFeaturesList, classes.resetList].join(' ')}>
+                  <ul className={classes.pricingFeaturesList}>
                     {tier.description.map((line) => (
                       <Typography
                         component="li"
@@ -263,7 +246,7 @@ export default function Pricing() {
               <Typography variant="h6" color="textPrimary" gutterBottom>
                 {footer.title}
               </Typography>
-              <ul className={classes.resetList}>
+              <ul>
                 {footer.description.map((item) => (
                   <li key={item}>
                     <Link href="#" variant="subtitle1" color="textSecondary" className={classes.footerLink}>

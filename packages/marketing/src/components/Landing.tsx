@@ -12,7 +12,7 @@ import {
   Typography,
   Container,
   Link,
-  Grid,
+  Grid, GlobalStyles,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -30,11 +30,6 @@ function Copyright() {
 }
 
 const useStyles = makeStyles()((theme) => ({
-  '@global': {
-    a: {
-      textDecoration: 'none',
-    },
-  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -79,6 +74,11 @@ export default function Landing() {
 
   return (
     <React.Fragment>
+      <GlobalStyles styles={{
+        a: {
+          textDecoration: 'none',
+        },
+      }} />
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>

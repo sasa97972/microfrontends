@@ -49,7 +49,6 @@ interface HeaderProps {
 
 export default function Header({ signedIn, onSignOut }: HeaderProps) {
   const { classes } = useStyles();
-  console.log(classes);
 
   const onClick = () => {
     if (signedIn && onSignOut) {
