@@ -4,25 +4,25 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Components
 import MarketingApp from './components/MarketingApp';
-import Header from './components/Header';
+import Main from './components/Main';
 
 const router = createBrowserRouter([
-	{
-		element: (
-			<div>
-				<Header
-					signedIn={false}
-					onSignOut={() => {
-						console.log('Signed out!');
-					}}
-				/>
-				<MarketingApp />
-			</div>
-		),
-		path: '/*',
-	},
+  {
+    path: '/',
+    element: <Main />,
+    children: [
+      {
+        path: '/',
+        element: <MarketingApp />,
+      },
+      {
+        path: '/pricing',
+        element: <MarketingApp />,
+      },
+    ],
+  },
 ]);
 
 export default function App() {
-	return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }

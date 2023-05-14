@@ -1,5 +1,5 @@
 // Utils
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 // Components
@@ -16,11 +16,15 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-function Copyright() {
+interface CopyrightProps {
+  handleRouteChange: (path: string) => void;
+}
+
+function Copyright({ handleRouteChange }: CopyrightProps) {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link component={RouterLink} to="/" color="inherit">
+      <Link component={RouterLink} to="/" color="inherit" onClick={() => handleRouteChange('/')}>
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -69,8 +73,16 @@ const useStyles = makeStyles()((theme) => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Landing() {
+interface LandingProps {
+  onNavigate?: (path: string) => void;
+}
+
+export default function Landing({ onNavigate }: LandingProps) {
   const { classes } = useStyles();
+
+  const handleRouteChange = useCallback((path: string) => {
+    typeof onNavigate === 'function' && onNavigate(path);
+  }, [onNavigate]);
 
   return (
     <React.Fragment>
@@ -105,14 +117,14 @@ export default function Landing() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} component="div" className={classes.linksGrid}>
                 <Grid item>
-                  <RouterLink to="/pricing" className={classes.link}>
+                  <RouterLink to="/pricing" className={classes.link} onClick={() => handleRouteChange('/pricing')}>
                     <Button variant="contained" color="primary">
                       Pricing
                     </Button>
                   </RouterLink>
                 </Grid>
                 <Grid item>
-                  <RouterLink to="/pricing" className={classes.link}>
+                  <RouterLink to="/pricing" className={classes.link} onClick={() => handleRouteChange('/pricing')}>
                     <Button variant="outlined" color="primary">
                       Pricing
                     </Button>
@@ -169,7 +181,7 @@ export default function Landing() {
         >
           Something here to give the footer a purpose!
         </Typography>
-        <Copyright />
+        <Copyright handleRouteChange={handleRouteChange} />
       </footer>
       {/* End footer */}
     </React.Fragment>

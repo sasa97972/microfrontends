@@ -14,6 +14,9 @@ const devConfig = {
     port: 8081,
     historyApiFallback: true,
     compress: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   plugins: [
     new ModuleFederationPlugin({

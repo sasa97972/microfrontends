@@ -1,24 +1,42 @@
 // Utils
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React, { lazy as lazyLoad, Suspense } from 'react';
+import { createMemoryRouter, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { isIsolationMode } from './utils/isIsolationMode';
 
-const router = createBrowserRouter([
+// Components
+import Loader from './components/Loader';
+import Main from './components/Main';
+
+const routerFactory = isIsolationMode() ? createBrowserRouter : createMemoryRouter;
+
+export const router = routerFactory([
   {
-    async lazy() {
-      const Landing = await import('./components/Landing');
-      return { Component: Landing.default };
-    },
     path: '/',
-  },
-  {
-    async lazy() {
-      const Pricing = await import('./components/Pricing');
-      return { Component: Pricing.default };
-    },
-    path: '/pricing',
+    element: <Main />,
+    children: [
+      {
+        path: '/',
+        async lazy() {
+          const Landing = await lazyLoad(() => import('./components/Landing'));
+          return { element: <Landing /> };
+        },
+      },
+      {
+        path: '/pricing',
+        async lazy() {
+          const Pricing = await lazyLoad(() => import('./components/Pricing'));
+          return { element: <Pricing /> };
+        },
+      },
+    ],
   },
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+
+  return (
+    <Suspense fallback={<Loader />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
