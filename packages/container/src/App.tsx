@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Components
 import MarketingApp from './components/MarketingApp';
+import AuthApp from './components/AuthApp';
 import Main from './components/Main';
 
 const router = createBrowserRouter([
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: '/pricing',
         element: <MarketingApp />,
+      },
+      {
+        path: '/auth/signin',
+        element: <AuthApp />,
+      },
+      {
+        path: '/auth/signup',
+        element: <AuthApp />,
       },
     ],
   },

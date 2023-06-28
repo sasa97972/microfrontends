@@ -44,6 +44,13 @@
         ],
         "comma-dangle": ["error", "always-multiline"],
         "indent": ["error", 2],
-        "@typescript-eslint/no-non-null-assertion": "off"
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "no-multiple-empty-lines": ["error", {
+            "max": 1,
+            "maxEOF": 1
+        }],
+        "object-curly-newline": ["error", {
+            "ImportDeclaration": { "multiline": true, "minProperties": 10 }
+        }]
     }
 }

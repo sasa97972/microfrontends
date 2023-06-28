@@ -12,7 +12,8 @@ import {
   Typography,
   Container,
   Link,
-  Grid, GlobalStyles,
+  Grid,
+  GlobalStyles,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -85,7 +86,7 @@ export default function Landing({ onNavigate }: LandingProps) {
   }, [onNavigate]);
 
   return (
-    <React.Fragment>
+    <>
       <GlobalStyles styles={{
         a: {
           textDecoration: 'none',
@@ -184,6 +185,6 @@ export default function Landing({ onNavigate }: LandingProps) {
         <Copyright handleRouteChange={handleRouteChange} />
       </footer>
       {/* End footer */}
-    </React.Fragment>
+    </>
   );
 }

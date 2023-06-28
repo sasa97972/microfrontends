@@ -1,5 +1,6 @@
 const { merge } = require('webpack-merge');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const commonConfig = require('./webpack.common');
 const dependencies = require('./sharedDependencies').dependencies;
 
@@ -10,16 +11,19 @@ const devConfig = {
   },
   devtool: 'eval-source-map',
   devServer: {
-    port: 8080,
+    port: 8082,
     historyApiFallback: true,
     compress: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'container',
-      remotes: {
-        marketing: 'marketing@http://localhost:8081/remoteEntry.js',
-        auth: 'auth@http://localhost:8082/remoteEntry.js',
+      name: 'auth',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './AuthApp': './src/bootstrap',
       },
       shared: {
         ...dependencies,
@@ -28,6 +32,10 @@ const devConfig = {
           requiredVersion: dependencies.react,
         }
       },
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      publicPath: '/'
     }),
   ],
 };
