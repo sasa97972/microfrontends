@@ -19,6 +19,7 @@ function AuthApp() {
           navigate(path);
         }
       },
+      initialPath: location.pathname,
     });
     const { onParentNavigate } = data || {};
     setNavigateCallback(() => onParentNavigate);
@@ -26,7 +27,7 @@ function AuthApp() {
 
   useEffect(() => {
     typeof navigateCallback === 'function' && navigateCallback(location.pathname);
-  }, [location, navigateCallback]);
+  }, [location.pathname, navigateCallback]);
 
   return <div ref={authRoot} />;
 }

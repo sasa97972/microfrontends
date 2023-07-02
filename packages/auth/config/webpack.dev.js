@@ -8,6 +8,7 @@ const devConfig = {
   mode: 'development',
   output: {
     clean: true,
+    publicPath: 'http://localhost:8082/'
   },
   devtool: 'eval-source-map',
   devServer: {

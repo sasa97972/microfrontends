@@ -21,11 +21,7 @@ const router = createBrowserRouter([
         element: <MarketingApp />,
       },
       {
-        path: '/auth/signin',
-        element: <AuthApp />,
-      },
-      {
-        path: '/auth/signup',
+        path: '/auth/*',
         element: <AuthApp />,
       },
     ],
