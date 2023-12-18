@@ -1,11 +1,10 @@
 // utils
-import React from 'react';
+import React, { lazy as lazyLoad, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Components
-import MarketingApp from './components/MarketingApp';
-import AuthApp from './components/AuthApp';
 import Main from './components/Main';
+import Loader from './components/Loader';
 
 const router = createBrowserRouter([
   {
@@ -14,20 +13,33 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <MarketingApp />,
+        async lazy() {
+          const MarketingApp = await lazyLoad(() => import('./components/MarketingApp'));
+          return { element: <MarketingApp /> };
+        },
       },
       {
         path: '/pricing',
-        element: <MarketingApp />,
+        async lazy() {
+          const MarketingApp = await lazyLoad(() => import('./components/MarketingApp'));
+          return { element: <MarketingApp /> };
+        },
       },
       {
         path: '/auth/*',
-        element: <AuthApp />,
+        async lazy() {
+          const AuthApp = await lazyLoad(() => import('./components/AuthApp'));
+          return { element: <AuthApp /> };
+        },
       },
     ],
   },
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }

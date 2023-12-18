@@ -19,7 +19,6 @@ interface Options {
 const routerFactory = isIsolationMode() ? createBrowserRouter : createMemoryRouter;
 
 const mount = (el: Element, { onNavigate, initialPath }: Options) => {
-  console.log(initialPath);
   const router = routerFactory([
     {
       path: '/',
