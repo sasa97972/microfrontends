@@ -1,5 +1,5 @@
 // Utils
-import React from 'react';
+import React, { memo } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 import { GlobalStyles } from '@mui/material';
@@ -43,15 +43,15 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 interface HeaderProps {
-  signedIn: boolean;
+  isSignedIn: boolean;
   onSignOut: () => void;
 }
 
-export default function Header({ signedIn, onSignOut }: HeaderProps) {
+function Header({ isSignedIn, onSignOut }: HeaderProps) {
   const { classes } = useStyles();
 
   const onClick = () => {
-    if (signedIn && onSignOut) {
+    if (isSignedIn && onSignOut) {
       onSignOut();
     }
   };
@@ -92,13 +92,15 @@ export default function Header({ signedIn, onSignOut }: HeaderProps) {
             variant="outlined"
             className={classes.link}
             component={RouterLink}
-            to={signedIn ? '/' : '/auth/signin'}
+            to={isSignedIn ? '/' : '/auth/signin'}
             onClick={onClick}
           >
-            {signedIn ? 'Logout' : 'Login'}
+            {isSignedIn ? 'Logout' : 'Login'}
           </Button>
         </Toolbar>
       </AppBar>
     </React.Fragment>
   );
 }
+
+export default memo(Header);

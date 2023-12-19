@@ -14,11 +14,12 @@ import Main from './components/Main';
 interface Options {
   onNavigate?: (path: string) => void;
   initialPath?: string;
+  onSignIn: () => void;
 }
 
 const routerFactory = isIsolationMode() ? createBrowserRouter : createMemoryRouter;
 
-const mount = (el: Element, { onNavigate, initialPath }: Options) => {
+const mount = (el: Element, { onNavigate, initialPath, onSignIn }: Options) => {
   const router = routerFactory([
     {
       path: '/',
@@ -28,14 +29,14 @@ const mount = (el: Element, { onNavigate, initialPath }: Options) => {
           path: '/auth/signin',
           async lazy() {
             const SignIn = await lazyLoad(() => import('./components/SignIn'));
-            return { element: <SignIn onSignIn={() => {console.log('Signed in!');}} /> };
+            return { element: <SignIn onSignIn={onSignIn} /> };
           },
         },
         {
           path: '/auth/signup',
           async lazy() {
             const SignUp = await lazyLoad(() => import('./components/SignUp'));
-            return { element: <SignUp onSignIn={() => {console.log('Signed in!');}} /> };
+            return { element: <SignUp onSignIn={onSignIn} /> };
           },
         },
       ],
@@ -63,7 +64,14 @@ const mount = (el: Element, { onNavigate, initialPath }: Options) => {
 };
 
 if (isIsolationMode()) {
-  mount(document.querySelector(DEV_ROOT_SELECTOR)!, {});
+  mount(
+    document.querySelector(DEV_ROOT_SELECTOR)!,
+    {
+      onSignIn: () => {
+        console.log('Signed In');
+      },
+    },
+  );
 }
 
 export { mount };

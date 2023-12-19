@@ -1,13 +1,22 @@
 // Utils
-import React, { useEffect, useRef, memo, useState } from 'react';
+import React, { useEffect, useRef, memo, useState, useContext, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // Modules Federation
 import { mount } from 'auth/AuthApp';
 
+// Contexts
+import { AuthContext } from '../contexts/authContext';
+
 function AuthApp() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { signIn } = useContext(AuthContext);
+
+  const onSignIn = useCallback(() => {
+    signIn();
+  }, [signIn]);
 
   const authRoot = useRef<null | HTMLDivElement>(null);
   const [navigateCallback, setNavigateCallback] = useState<undefined | ((path: string) => void)>(undefined);
@@ -20,6 +29,7 @@ function AuthApp() {
         }
       },
       initialPath: location.pathname,
+      onSignIn,
     });
     const { onParentNavigate } = data || {};
     setNavigateCallback(() => onParentNavigate);

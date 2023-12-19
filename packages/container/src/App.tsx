@@ -1,10 +1,11 @@
 // utils
-import React, { lazy as lazyLoad, Suspense } from 'react';
+import React, { lazy as lazyLoad, Suspense, useCallback, useMemo, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Components
 import Main from './components/Main';
 import Loader from './components/Loader';
+import AuthContextProvider from './contexts/authContext';
 
 const router = createBrowserRouter([
   {
@@ -38,8 +39,10 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <Suspense fallback={<Loader />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <AuthContextProvider>
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </AuthContextProvider>
   );
 }
