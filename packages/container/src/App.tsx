@@ -33,6 +33,13 @@ const router = createBrowserRouter([
           return { element: <AuthApp /> };
         },
       },
+      {
+        path: '/dashboard',
+        async lazy() {
+          const DashboardApp = await lazyLoad(() => import('./components/DashboardApp'));
+          return { element: <DashboardApp /> };
+        },
+      },
     ],
   },
 ]);

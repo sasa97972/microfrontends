@@ -16,6 +16,7 @@ function AuthApp() {
 
   const onSignIn = useCallback(() => {
     signIn();
+    navigate('/dashboard');
   }, [signIn]);
 
   const authRoot = useRef<null | HTMLDivElement>(null);
